@@ -7,7 +7,7 @@ ConvertMinStrToDec <- function(min_str)
     round(min, 2)
   }
 
-  ls <- sapply(str_split(min_str, ":"), Convert)
+  ls <- sapply(stringr::str_split(min_str, ":"), Convert)
   return(ls)
 }
 
