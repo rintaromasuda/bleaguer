@@ -2,7 +2,8 @@
 LoadTeams <- function()
 {
   file <- system.file("extdata", "teams.csv", package = "bleaguer", mustWork = TRUE)
-  df <- read.csv(file, encoding = "UTF-8")
+  df <- read.csv(file, fileEncoding = "UTF-8", sep = ",")
+
   return(df)
 }
 
