@@ -1,6 +1,6 @@
 context("Testing load_util")
 
-test_that("Test cases for the team master data frame", {
+test_that("Test cases for the team data.frame", {
   expect_equal(
     nrow(subset(b.teams, Season == "2016-17" & League == "B1")),
     18)
@@ -19,4 +19,8 @@ test_that("Test cases for the team master data frame", {
   expect_equal(
     nrow(subset(b.teams, Season == "2018-19" & League == "B2")),
     18)
+})
+
+test_that("Test cases for the event data.frame", {
+  expect_equal(nrow(b.events), 20)
 })
