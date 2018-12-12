@@ -7,4 +7,5 @@ LoadTeams <- function()
   return(df)
 }
 
-teams <- LoadTeams()
+# Objects that get loaded by default when this package gets loaded
+b.teams <- LoadTeams()
