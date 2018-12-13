@@ -22,5 +22,5 @@ test_that("Test cases for the team data.frame", {
 })
 
 test_that("Test cases for the event data.frame", {
-  expect_equal(nrow(b.events), 20)
+  expect_equal(nrow(b.events), 10)
 })
