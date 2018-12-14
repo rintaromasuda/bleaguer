@@ -10,3 +10,18 @@ ConvertMinStrToDec <- function(min_str) {
   return(ls)
 }
 
+#' @export
+GetFullDateString <- function(dateString, season) {
+  list <- stringr::str_split(dateString, "\\.")
+  month <- as.numeric(sapply(list, '[[', 1)) # Get only the month parts
+  isStartYear <- month >= 9 & month <= 12
+  isOneDigitMonth <- month >= 1 & month <= 9
+  startYear <- as.numeric(substr(season, 0, 4)) # Get the start year of the seasons
+  actualYear <- ifelse(isStartYear, startYear, startYear + 1)
+  result <- paste(as.character(actualYear),
+                  ".",
+                  ifelse(isOneDigitMonth, "0", ""),
+                  dateString,
+                  sep = "")
+  return(result)
+}
