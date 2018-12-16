@@ -37,6 +37,22 @@ GetEvents <- function(league, needCommonEvents = TRUE) {
   }
 }
 
+#' @export
+LoadGames <- function() {
+  result <- data.frame()
+
+  file <- system.file("extdata", "games_201617.csv", package = "bleaguer", mustWork = TRUE)
+  df <- readr::read_csv(file, locale = readr::locale(encoding = "UTF-8"))
+  result <- df
+
+  file <- system.file("extdata", "games_201718.csv", package = "bleaguer", mustWork = TRUE)
+  df <- readr::read_csv(file, locale = readr::locale(encoding = "UTF-8"))
+  result <- rbind(result, df)
+
+  return(result)
+}
+
 # Objects that get loaded by default when this package gets loaded
 b.teams <- LoadTeams()
 b.events <- LoadEvents()
+b.games <- LoadGames()
