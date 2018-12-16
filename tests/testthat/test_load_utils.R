@@ -1,6 +1,7 @@
 context("Testing load_util")
 
 test_that("Test cases for the team data.frame", {
+  expect_true(exists("b.teams"))
   expect_equal(
     nrow(subset(b.teams, Season == "2016-17" & League == "B1")),
     18)
@@ -22,5 +23,10 @@ test_that("Test cases for the team data.frame", {
 })
 
 test_that("Test cases for the event data.frame", {
+  expect_true(exists("b.events"))
   expect_equal(nrow(b.events), 10)
+})
+
+test_that("Test cases for the game data.frame", {
+  expect_true(exists("b.games"))
 })
