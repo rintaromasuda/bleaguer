@@ -29,4 +29,8 @@ test_that("Test cases for the event data.frame", {
 
 test_that("Test cases for the game data.frame", {
   expect_true(exists("b.games"))
+  expect_equal(
+    nrow(b.games),
+    length(unique(b.games$ScheduleKey))
+  )
 })
