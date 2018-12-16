@@ -18,7 +18,7 @@ LoadEvents <- function() {
     c(9,  "B2",    "Post",    "B2ZPF",  "B2残留プレーオフ"),
     c(11, "B1,B2", "Post",    "B1B2SW", "B1/B2入れ替え戦"),
     c(17, "B2,B3", "Post",    "B2B3SW", "B2/B3入れ替え戦"),
-    c(22, "B1,B2", "Pre",     "EC", "アーリーカップ")
+    c(20, "B1,B2", "Pre",     "EC", "アーリーカップ")
     )
   m <- matrix(events, nrow = length(events) / length(col_names),
               ncol = length(col_names),
