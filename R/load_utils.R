@@ -34,7 +34,7 @@ LoadEvents <- function() {
               byrow = TRUE)
   df <- as.data.frame(m, stringsAsFactors = TRUE)
   colnames(df) <- col_names
-  df$EventId <- as.integer(df$EventId)
+  df$EventId <- as.integer(as.character(df$EventId))
   return(df)
 }
 
