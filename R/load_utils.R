@@ -1,4 +1,4 @@
-#' @export
+  #' @export
 LoadTeams <- function() {
   file <- system.file("extdata", "teams.csv", package = "bleaguer", mustWork = TRUE)
   df <- readr::read_csv(file,
@@ -67,6 +67,12 @@ LoadGames <- function() {
   result <- df
 
   file <- system.file("extdata", "games_201718.csv", package = "bleaguer", mustWork = TRUE)
+  df <- readr::read_csv(file,
+                        col_types = colTypes,
+                        locale = readr::locale(encoding = "UTF-8"))
+  result <- rbind(result, df)
+
+  file <- system.file("extdata", "games_201819.csv", package = "bleaguer", mustWork = TRUE)
   df <- readr::read_csv(file,
                         col_types = colTypes,
                         locale = readr::locale(encoding = "UTF-8"))
