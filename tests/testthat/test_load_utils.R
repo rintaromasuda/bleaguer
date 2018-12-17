@@ -28,9 +28,30 @@ test_that("Test cases for the event data.frame", {
 })
 
 test_that("Test cases for the game data.frame", {
+  # Object exists
   expect_true(exists("b.games"))
+
+  # ScheduleKey is unique
   expect_equal(
     nrow(b.games),
     length(unique(b.games$ScheduleKey))
+  )
+
+  # One regular season is 540 games
+  expect_equal(
+    nrow(subset(b.games, Season == "2016-17" & EventId == 2)), #B1 RS
+    540
+  )
+  expect_equal(
+    nrow(subset(b.games, Season == "2016-17" & EventId == 7)), #B2 RS
+    540
+  )
+  expect_equal(
+    nrow(subset(b.games, Season == "2017-18" & EventId == 2)), #B1 RS
+    540
+  )
+  expect_equal(
+    nrow(subset(b.games, Season == "2017-18" & EventId == 7)), #B2 RS
+    540
   )
 })

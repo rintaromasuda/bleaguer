@@ -1,7 +1,16 @@
 #' @export
 LoadTeams <- function() {
   file <- system.file("extdata", "teams.csv", package = "bleaguer", mustWork = TRUE)
-  df <- readr::read_csv(file, locale = readr::locale(encoding = "UTF-8"))
+  df <- readr::read_csv(file,
+                        col_types = list(
+                          readr::col_integer(),
+                          readr::col_factor(),
+                          readr::col_factor(),
+                          readr::col_factor(),
+                          readr::col_factor(),
+                          readr::col_factor()
+                        ),
+                        locale = readr::locale(encoding = "UTF-8"))
 
   return(df)
 }
@@ -25,6 +34,7 @@ LoadEvents <- function() {
               byrow = TRUE)
   df <- as.data.frame(m, stringsAsFactors = TRUE)
   colnames(df) <- col_names
+  df$EventId <- as.integer(df$EventId)
   return(df)
 }
 
@@ -39,14 +49,27 @@ GetEvents <- function(league, needCommonEvents = TRUE) {
 
 #' @export
 LoadGames <- function() {
-  result <- data.frame()
+  colTypes <- list(
+    readr::col_integer(),
+    readr::col_factor(),
+    readr::col_integer(),
+    readr::col_date(format = "%Y.%m.%d"),
+    readr::col_factor(),
+    readr::col_integer(),
+    readr::col_integer(),
+    readr::col_integer()
+  )
 
   file <- system.file("extdata", "games_201617.csv", package = "bleaguer", mustWork = TRUE)
-  df <- readr::read_csv(file, locale = readr::locale(encoding = "UTF-8"))
+  df <- readr::read_csv(file,
+                        col_types = colTypes,
+                        locale = readr::locale(encoding = "UTF-8"))
   result <- df
 
   file <- system.file("extdata", "games_201718.csv", package = "bleaguer", mustWork = TRUE)
-  df <- readr::read_csv(file, locale = readr::locale(encoding = "UTF-8"))
+  df <- readr::read_csv(file,
+                        col_types = colTypes,
+                        locale = readr::locale(encoding = "UTF-8"))
   result <- rbind(result, df)
 
   return(result)
