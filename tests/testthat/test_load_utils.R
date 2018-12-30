@@ -63,3 +63,14 @@ test_that("Test cases for the game data.frame", {
     0
   )
 })
+
+test_that("Test cases for the game summary data.frame exists", {
+  expect_true(exists("b.games.summary"))
+
+  num.row <- nrow(b.games.summary)
+  num.uniqueId <- length(unique(b.games.summary$ScheduleKey))
+  expect_equal(
+    num.row,
+    num.uniqueId * 2
+  )
+})
