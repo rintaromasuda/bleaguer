@@ -24,7 +24,7 @@ test_that("Test cases for the team data.frame", {
 
 test_that("Test cases for the event data.frame", {
   expect_true(exists("b.events"))
-  expect_equal(nrow(b.events), 10)
+  expect_equal(nrow(b.events), 12)
 })
 
 test_that("Test cases for the game data.frame", {

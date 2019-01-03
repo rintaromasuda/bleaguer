@@ -1,10 +1,12 @@
   EventId,Category,ShortName,FriendlyName
   2,Regular,B1RS,B1レギュラーシーズン
   3,Post,B1CS,B1チャンピオンシップ
+  300,Post,B1CSG3,B1チャンピオンシップゲーム3
   4,Post,B1ZPF,B1残留プレーオフ
   5,AllStar,AS,オールスターゲーム
   7,Regular,B2RS,B2レギュラーシーズン
   8,Post,B2PF,B2プレーオフ
+  800,Post,B2PFG3,B2プレーオフゲーム3
   9,Post,B2ZPF,B2残留プレーオフ
   11,Post,B1B2SW,B1/B2入れ替え戦
   17,Post,B2B3SW,B2/B3入れ替え戦
