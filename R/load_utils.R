@@ -128,6 +128,12 @@ LoadGameSummary <- function() {
                         locale = readr::locale(encoding = "UTF-8"))
   result <- rbind(result, df)
 
+  file <- system.file("extdata", "games_summary_201819.csv", package = "bleaguer", mustWork = TRUE)
+  df <- readr::read_csv(file,
+                        col_types = colTypes,
+                        locale = readr::locale(encoding = "UTF-8"))
+  result <- rbind(result, df)
+
   return(result)
 }
 
