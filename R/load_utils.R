@@ -99,8 +99,11 @@ LoadGameSummary <- function() {
     readr::col_integer(),
     readr::col_integer(),
     readr::col_integer(),
-    #AS, TO, ST
+    # AS, TO, ST
     readr::col_integer(),
+    readr::col_integer(),
+    readr::col_integer(),
+    # BS, F
     readr::col_integer(),
     readr::col_integer(),
     # Advanced
