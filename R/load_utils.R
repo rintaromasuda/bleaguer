@@ -1,4 +1,4 @@
-  #' @export
+#' @export
 LoadTeams <- function() {
   file <- system.file("extdata", "teams.csv", package = "bleaguer", mustWork = TRUE)
   df <- readr::read_csv(file,
