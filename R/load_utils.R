@@ -30,15 +30,6 @@ LoadEvents <- function() {
 }
 
 #' @export
-GetEvents <- function(league, needCommonEvents = TRUE) {
-  if (needCommonEvents) {
-    return(subset(b.events, grepl(league, Leagues)))
-  } else {
-    return(subset(b.events, Leagues == league))
-  }
-}
-
-#' @export
 LoadGames <- function() {
   colTypes <- list(
     readr::col_integer(),
