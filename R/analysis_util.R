@@ -21,31 +21,31 @@ GetGameSummary <- function() {
 
   # This data frame treats the HOME team as the main team
   df.byHome <- df %>%
-    mutate(TeamId = HomeTeamId,
-           Opp.TeamId = AwayTeamId) %>%
-    select("ScheduleKey",
-           "Season",
-           "Category",
-           "Event",
-           "Date",
-           "Arena",
-           "Attendance",
-           "TeamId",
-           "Opp.TeamId")
+    dplyr::mutate(TeamId = HomeTeamId,
+                  Opp.TeamId = AwayTeamId) %>%
+    dplyr::select("ScheduleKey",
+                  "Season",
+                  "Category",
+                  "Event",
+                  "Date",
+                  "Arena",
+                  "Attendance",
+                  "TeamId",
+                  "Opp.TeamId")
 
   # This data frame treats the AWAY team as the main team
   df.byAway <- df %>%
-    mutate(TeamId = AwayTeamId,
-           Opp.TeamId = HomeTeamId) %>%
-    select("ScheduleKey",
-           "Season",
-           "Category",
-           "Event",
-           "Date",
-           "Arena",
-           "Attendance",
-           "TeamId",
-           "Opp.TeamId")
+    dplyr::mutate(TeamId = AwayTeamId,
+                  Opp.TeamId = HomeTeamId) %>%
+    dplyr::select("ScheduleKey",
+                  "Season",
+                  "Category",
+                  "Event",
+                  "Date",
+                  "Arena",
+                  "Attendance",
+                  "TeamId",
+                  "Opp.TeamId")
 
   df.byHome.merged <- MergeSummary(df.byHome)
   df.byHome.merged$HomeAway <- "Home"
