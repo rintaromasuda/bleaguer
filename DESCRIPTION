@@ -12,6 +12,7 @@ LazyData: true
 Imports:
     stringr,
     readr,
+    magrittr,
     dplyr
 Suggests: 
     testthat
