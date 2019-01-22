@@ -64,7 +64,7 @@ test_that("Test cases for the game data.frame", {
   )
 })
 
-test_that("Test cases for the game summary data.frame exists", {
+test_that("Test cases for the game summary data.frame", {
   expect_true(exists("b.games.summary"))
 
   num.row <- nrow(b.games.summary)
@@ -72,5 +72,16 @@ test_that("Test cases for the game summary data.frame exists", {
   expect_equal(
     num.row,
     num.uniqueId * 2
+  )
+})
+
+test_that("Test cases for the game boxscore data.frame", {
+  expect_true(exists("b.games.boxscore"))
+
+  num.row <- nrow(b.games.boxscore)
+  num.unique <- nrow(unique(b.games.boxscore[, c("ScheduleKey", "TeamId", "PlayerId")]))
+  expect_equal(
+    num.row,
+    num.unique
   )
 })
