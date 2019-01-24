@@ -136,6 +136,12 @@ GetGameSummary <- function() {
                              "TimesTied"
                              )]
 
+  # Assing Game.Index (or Rank) to each game (per Season, TeamId, Category)
+  df.result <- df.result %>%
+    dplyr::group_by(Season, TeamId, Category) %>%
+    dplyr::arrange(Date) %>%
+    dplyr::mutate(Game.Index = dplyr::row_number())
+
   return(df.result)
 }
 
