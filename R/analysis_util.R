@@ -138,3 +138,13 @@ GetGameSummary <- function() {
 
   return(df.result)
 }
+
+#' @export
+SearchPlayer <- function(name) {
+  df <- b.games.boxscore[, c("PlayerId", "Player", "TeamId")]
+  df <- df[grepl(name, df$Player),]
+  df <- unique(df)
+  df <- merge(df, b.teams, by.x = "TeamId", by.y = "TeamId")
+  df <- unique(df[,c("PlayerId", "Player", "NameLong")])
+  return(df)
+}
