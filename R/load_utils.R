@@ -195,6 +195,22 @@ LoadBoxscore <- function() {
                         locale = readr::locale(encoding = "UTF-8"))
   result <- rbind(result, df)
 
+  # Adding levels to Positoin factor form guard to center
+  result$Position <- factor(result$Position,
+                            levels = c("PG",
+                                       "PG/SG",
+                                       "G",
+                                       "SG",
+                                       "SG/SF",
+                                       "G/F",
+                                       "SF",
+                                       "SF/PF",
+                                       "F",
+                                       "PF",
+                                       "F/C",
+                                       "PF/C",
+                                       "C"))
+
   return(result)
 }
 
