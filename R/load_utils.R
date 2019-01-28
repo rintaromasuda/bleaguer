@@ -131,8 +131,92 @@ LoadGameSummary <- function() {
   return(result)
 }
 
+#' @export
+LoadBoxscore <- function() {
+  colTypes <- list(
+    # ScheduleKey, TeamId
+    readr::col_integer(),
+    readr::col_integer(),
+    # BoxType
+    readr::col_factor(),
+    # PlayerId
+    readr::col_integer(),
+    # Player
+    readr::col_character(),
+    # Number
+    readr::col_integer(),
+    # Position, StarterBench
+    readr::col_factor(),
+    readr::col_factor(),
+    # MIN
+    readr::col_double(),
+    # MIN.STR
+    readr::col_character(),
+    # PTS, FGM, FGA, F3GM, F3GA, FTM, FTA
+    readr::col_integer(),
+    readr::col_integer(),
+    readr::col_integer(),
+    readr::col_integer(),
+    readr::col_integer(),
+    readr::col_integer(),
+    readr::col_integer(),
+    # OR, DR, TR
+    readr::col_integer(),
+    readr::col_integer(),
+    readr::col_integer(),
+    # AS, TO, ST, BS, BSR, F, FD
+    readr::col_integer(),
+    readr::col_integer(),
+    readr::col_integer(),
+    readr::col_integer(),
+    readr::col_integer(),
+    readr::col_integer(),
+    readr::col_integer(),
+    # DUNK, EFF
+    readr::col_integer(),
+    readr::col_integer()
+  )
+
+  file <- system.file("extdata", "games_boxscore_201617.csv", package = "bleaguer", mustWork = TRUE)
+  df <- readr::read_csv(file,
+                        col_types = colTypes,
+                        locale = readr::locale(encoding = "UTF-8"))
+  result <- df
+
+  file <- system.file("extdata", "games_boxscore_201718.csv", package = "bleaguer", mustWork = TRUE)
+  df <- readr::read_csv(file,
+                        col_types = colTypes,
+                        locale = readr::locale(encoding = "UTF-8"))
+  result <- rbind(result, df)
+
+  file <- system.file("extdata", "games_boxscore_201819.csv", package = "bleaguer", mustWork = TRUE)
+  df <- readr::read_csv(file,
+                        col_types = colTypes,
+                        locale = readr::locale(encoding = "UTF-8"))
+  result <- rbind(result, df)
+
+  # Adding levels to Positoin factor form guard to center
+  result$Position <- factor(result$Position,
+                            levels = c("PG",
+                                       "PG/SG",
+                                       "G",
+                                       "SG",
+                                       "SG/SF",
+                                       "G/F",
+                                       "SF",
+                                       "SF/PF",
+                                       "F",
+                                       "PF",
+                                       "F/C",
+                                       "PF/C",
+                                       "C"))
+
+  return(result)
+}
+
 # Objects that get loaded by default when this package gets loaded
 b.teams <- LoadTeams()
 b.events <- LoadEvents()
 b.games <- LoadGames()
 b.games.summary <- LoadGameSummary()
+b.games.boxscore <- LoadBoxscore()
