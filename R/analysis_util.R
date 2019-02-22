@@ -142,6 +142,10 @@ GetGameSummary <- function() {
     dplyr::arrange(Date) %>%
     dplyr::mutate(Game.Index = dplyr::row_number())
 
+  # The column telling you the result of the game
+  df.result$WinLose <- factor(ifelse(df.result$PTS < df.result$Opp.PTS, "Lose", "Win"),
+                              levels = c("Lose", "Win"))
+
   return(df.result)
 }
 
@@ -153,4 +157,105 @@ SearchPlayer <- function(name) {
   df <- merge(df, b.teams, by.x = "TeamId", by.y = "TeamId")
   df <- unique(df[,c("PlayerId", "Player", "NameLong")])
   return(df)
+}
+
+GetTeamResultSummary <- function(df.game.summary, teamIds) {
+  df.result <- df.game.summary %>%
+    dplyr::filter(TeamId %in% teamIds & Opp.TeamId %in% teamIds) %>%
+    dplyr::group_by(TeamName, TeamId, TeamDivision) %>%
+    dplyr::summarise(Game = dplyr::n(),
+                     Win = sum(WinLose == "Win"),
+                     Lose = sum(WinLose == "Lose"),
+                     WinRate = sum(WinLose == "Win") / dplyr::n(),
+                     PtsDiff = sum(PTS) - dplyr::sum(Opp.PTS),
+                     PPG = sum(PTS) / dplyr::n()) %>%
+    as.data.frame()
+
+  return(df.result)
+}
+
+#' @export
+GetStanding <- function(season, league, atEndOfGame = 60, needRank = FALSE) {
+  df.game.summary <- subset(GetGameSummary(),
+                            Season == season &
+                              League == league &
+                              Game.Index <= atEndOfGame &
+                              Category == "Regular")
+  allTeamIds <- subset(b.teams, Season == season & League == league)$TeamId
+  df.result <- GetTeamResultSummary(df.game.summary, allTeamIds)
+
+  if (needRank) {
+    #####
+    # First, we rank all teams only by win rate
+    #####
+    df.rank <- df.result %>%
+      dplyr::mutate(Rank = dplyr::min_rank(desc(WinRate))) %>%
+      dplyr::select(c("TeamId", "Rank")) %>%
+      as.data.frame()
+
+    #####
+    # Second, if we have more than one teams having the same rank, we will adjust them by
+    # comparing WinRate, PtsDiff, and PPG only within their matches.
+    #####
+    dupRanks <- df.rank$Rank[duplicated(df.rank$Rank)]
+    dupRanks <- unique(dupRanks)
+    for(rank in dupRanks) {
+      dupTeamIds <- subset(df.rank, Rank == rank)$TeamId
+      df.dupTeamResult <- GetTeamResultSummary(df.game.summary, dupTeamIds)
+      if(nrow(df.dupTeamResult) > 0) {
+        df.adjustedRank <- df.dupTeamResult %>%
+          dplyr::mutate(Rank = dplyr::min_rank(interaction(dplyr::desc(WinRate),
+                                                           dplyr::desc(PtsDiff),
+                                                           dplyr::desc(PPG),
+                                                           lex.order = TRUE))) %>%
+          dplyr::mutate(Rank = Rank + rank - 1) %>%
+          dplyr::select(c("TeamId", "Rank")) %>%
+          as.data.frame()
+
+        # If the teams didn't have a match yet, we don't adjust the rank for them
+        if (nrow(df.adjustedRank) == length(dupTeamIds)) {
+          df.rank <- rbind(
+            subset(df.rank, Rank != rank),
+            df.adjustedRank
+          )
+        }
+      }
+    }
+
+    #####
+    # Third, we'll do further rank by PtsDiff and PPG just in case we still have duplicates.
+    # If we don't have duplicates, then the result should remain the same.
+    #####
+    df.result <- merge(df.result, df.rank, by = c("TeamId"))
+    df.result <- df.result %>%
+      dplyr::mutate(FinalRank = dplyr::min_rank(interaction(Rank,
+                                                            dplyr::desc(PtsDiff),
+                                                            dplyr::desc(PPG),
+                                                            lex.order = TRUE))) %>%
+      as.data.frame()
+
+    df.result$Rank <- df.result$FinalRank
+    df.result$FinalRank <- NULL
+
+    # Adding per Division rank too
+    df.result <- df.result %>%
+      dplyr::group_by(TeamDivision) %>%
+      dplyr::mutate(DivisionRank = dplyr::min_rank(Rank)) %>%
+      as.data.frame()
+
+    # Adding rank within "wild card" teams
+    wildcardThreshold <- ifelse(league == "B1", 2, 1)
+    df.wildcard <- df.result %>%
+      dplyr::filter(DivisionRank > wildcardThreshold) %>%
+      dplyr::mutate(WildcardRank = dplyr::min_rank(Rank)) %>%
+      as.data.frame()
+
+    df.result$WildcardRank <- NA
+    df.result <- rbind(
+      subset(df.result, DivisionRank <= wildcardThreshold),
+      df.wildcard
+    )
+  }
+
+  return(df.result)
 }

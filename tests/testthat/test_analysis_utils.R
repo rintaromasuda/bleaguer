@@ -41,3 +41,21 @@ test_that("Test cases for data frames for analytics", {
     100 # Temp value
   )
 })
+
+test_that("Test cases for data frames for standings", {
+  for(season in c("2016-17", "2017-18", "2018-19")) {
+    for(league in c("B1", "B2")) {
+      df <- GetStanding(season, league, 60, TRUE)
+
+      expect_equal(
+        nrow(df),
+        18
+      )
+
+      expect_equal(
+        length(unique(df$Rank)),
+        18
+      )
+    }
+  }
+})
