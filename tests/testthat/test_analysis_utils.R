@@ -45,7 +45,7 @@ test_that("Test cases for data frames for analytics", {
 test_that("Test cases for data frames for standings", {
   for(season in c("2016-17", "2017-18", "2018-19")) {
     for(league in c("B1", "B2")) {
-      df <- GetStanding(season, league, 60, TRUE)
+      df <- GetStanding(season, league, atEndOfGame = 60, needRank = TRUE)
 
       expect_equal(
         nrow(df),

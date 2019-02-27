@@ -175,10 +175,11 @@ GetTeamResultSummary <- function(df.game.summary, teamIds) {
 }
 
 #' @export
-GetStanding <- function(season, league, atEndOfGame = 60, needRank = FALSE) {
+GetStanding <- function(season, league, fromGame = 1, atEndOfGame = 60, needRank = FALSE) {
   df.game.summary <- subset(GetGameSummary(),
                             Season == season &
                               League == league &
+                              Game.Index >= fromGame &
                               Game.Index <= atEndOfGame &
                               Category == "Regular")
   allTeamIds <- subset(b.teams, Season == season & League == league)$TeamId
