@@ -167,7 +167,7 @@ GetTeamResultSummary <- function(df.game.summary, teamIds) {
                      Win = sum(WinLose == "Win"),
                      Lose = sum(WinLose == "Lose"),
                      WinRate = sum(WinLose == "Win") / dplyr::n(),
-                     PtsDiff = sum(PTS) - dplyr::sum(Opp.PTS),
+                     PtsDiff = sum(PTS) - sum(Opp.PTS),
                      PPG = sum(PTS) / dplyr::n()) %>%
     as.data.frame()
 
@@ -190,7 +190,7 @@ GetStanding <- function(season, league, fromGame = 1, atEndOfGame = 60, needRank
     # First, we rank all teams only by win rate
     #####
     df.rank <- df.result %>%
-      dplyr::mutate(Rank = dplyr::min_rank(desc(WinRate))) %>%
+      dplyr::mutate(Rank = dplyr::min_rank(dplyr::desc(WinRate))) %>%
       dplyr::select(c("TeamId", "Rank")) %>%
       as.data.frame()
 
