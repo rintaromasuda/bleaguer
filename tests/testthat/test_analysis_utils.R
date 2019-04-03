@@ -59,3 +59,15 @@ test_that("Test cases for data frames for standings", {
     }
   }
 })
+
+test_that("Test cases for the data frame having # of games", {
+  for(season in c("2016-17", "2017-18")) {
+    df <- GetNumOfGames(season)
+    for(row in 1:nrow(df)) {
+      expect_equal(
+        df[row,]$NumOfGames,
+        60
+      )
+    }
+  }
+})
