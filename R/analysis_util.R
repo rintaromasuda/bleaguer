@@ -146,6 +146,13 @@ GetGameSummary <- function() {
   df.result$WinLose <- factor(ifelse(df.result$PTS < df.result$Opp.PTS, "Lose", "Win"),
                               levels = c("Lose", "Win"))
 
+  # Calculating eFG%, Offensive/Defensive Reboud Rate
+  df.result$EFG <- (df.result$F2GM + (df.result$F3GM * 1.5)) / (df.result$F2GA + df.result$F3GA)
+  df.result$Opp.EFG <- (df.result$Opp.F2GM + (df.result$Opp.F3GM * 1.5)) / (df.result$Opp.F2GA + df.result$Opp.F3GA)
+
+  df.result$ORR <- df.result$OR / (df.result$OR + df.result$Opp.DR)
+  df.result$DRR <- df.result$DR / (df.result$DR + df.result$Opp.OR)
+
   return(df.result)
 }
 
@@ -270,4 +277,26 @@ GetNumOfGames <- function(season = b.current.season) {
     dplyr::summarize(NumOfGames = dplyr::n()) %>%
     as.data.frame()
   return(df)
+}
+
+#' @export
+GetBoxscore <- function(playerId, season = b.current.season) {
+  df.games <- subset(GetGameSummary(), Season == season & Category == "Regular")
+  df.games <- df.games[, c("ScheduleKey",
+                           "Season",
+                           "TeamId",
+                           "Date",
+                           "Game.Index")]
+
+  df.result <- merge(df.games,
+                     subset(b.games.boxscore, PlayerId == playerId),
+                     by = c("ScheduleKey", "TeamId"))
+  df.result %<>%
+    dplyr::arrange(Date) %>%
+    dplyr::mutate(PlayerGame.Index = row_number())
+
+  # In some cases the player name can be different from record to record unfortunately. Thus, using the
+  # minimum one to get the single name.
+  df.result$Player <- min(df.result$Player)
+  return(df.result)
 }
