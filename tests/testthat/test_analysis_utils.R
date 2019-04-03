@@ -71,3 +71,11 @@ test_that("Test cases for the data frame having # of games", {
     }
   }
 })
+
+test_that("Test cases for the function returning a player's boxscore", {
+  df <- GetBoxscore(8468, "2018-19") # Shigehiro Taguchi, Chiba Jets in 2018-19
+  expect_gt(
+    nrow(df),
+    1
+  )
+})

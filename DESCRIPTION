@@ -1,11 +1,11 @@
 Package: bleaguer
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Provide Data of Japan Professional Basketball (B.LEAGUE)
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Author: Rintaro Masuda
+Maintainer: Rintaro Masuda <rintaro.masuda@live.jp>
+Description: The package provide data about Japan Men's Professional Basketball or B.LEAGUE.
+    The main data is stats but it also contains game schedule, arena, attendance data, and such.
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
