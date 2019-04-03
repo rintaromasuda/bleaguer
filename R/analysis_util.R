@@ -260,3 +260,14 @@ GetStanding <- function(season, league, fromGame = 1, atEndOfGame = 60, needRank
 
   return(df.result)
 }
+
+#' @export
+GetNumOfGames <- function(season = b.current.season) {
+  df <- GetGameSummary()
+  df %<>%
+    dplyr::filter(Season == season & Category == "Regular") %>%
+    dplyr::group_by(League, TeamName) %>%
+    dplyr::summarize(NumOfGames = dplyr::n()) %>%
+    as.data.frame()
+  return(df)
+}
