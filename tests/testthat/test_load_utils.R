@@ -54,13 +54,13 @@ test_that("Test cases for the game data.frame", {
     nrow(subset(b.games, Season == "2017-18" & EventId == 7)), #B2 RS
     540
   )
-  expect_gt(
+  expect_equal(
     nrow(subset(b.games, Season == "2018-19" & EventId == 2)), #B1 RS
-    0
+    540
   )
-  expect_gt(
+  expect_equal(
     nrow(subset(b.games, Season == "2018-19" & EventId == 7)), #B2 RS
-    0
+    540
   )
 })
 
