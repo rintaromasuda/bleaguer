@@ -31,14 +31,14 @@ test_that("Test cases for data frames for analytics", {
     expected
   )
 
-  expect_gt(
+  expect_equal(
     nrow(subset(df1819, Category == "Regular" & League == "B1")),
-    100 # Temp value
+    expected
   )
 
-  expect_gt(
+  expect_equal(
     nrow(subset(df1819, Category == "Regular" & League == "B2")),
-    100 # Temp value
+    expected
   )
 })
 
@@ -61,7 +61,7 @@ test_that("Test cases for data frames for standings", {
 })
 
 test_that("Test cases for the data frame having # of games", {
-  for(season in c("2016-17", "2017-18")) {
+  for(season in c("2016-17", "2017-18", "2018-19")) {
     df <- GetNumOfGames(season)
     for(row in 1:nrow(df)) {
       expect_equal(
