@@ -20,6 +20,12 @@ test_that("Test cases for the team data.frame", {
   expect_equal(
     nrow(subset(b.teams, Season == "2018-19" & League == "B2")),
     18)
+  expect_equal(
+    nrow(subset(b.teams, Season == "2019-20" & League == "B1")),
+    18)
+  expect_equal(
+    nrow(subset(b.teams, Season == "2019-20" & League == "B2")),
+    18)
 })
 
 test_that("Test cases for the event data.frame", {
