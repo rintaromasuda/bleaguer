@@ -66,6 +66,12 @@ LoadGames <- function() {
                         locale = readr::locale(encoding = "UTF-8"))
   result <- rbind(result, df)
 
+  file <- system.file("extdata", "games_202021.csv", package = "bleaguer", mustWork = TRUE)
+  df <- readr::read_csv(file,
+                        col_types = colTypes,
+                        locale = readr::locale(encoding = "UTF-8"))
+  result <- rbind(result, df)
+
   return(result)
 }
 
@@ -135,6 +141,12 @@ LoadGameSummary <- function() {
   result <- rbind(result, df)
 
   file <- system.file("extdata", "games_summary_201920.csv", package = "bleaguer", mustWork = TRUE)
+  df <- readr::read_csv(file,
+                        col_types = colTypes,
+                        locale = readr::locale(encoding = "UTF-8"))
+  result <- rbind(result, df)
+
+  file <- system.file("extdata", "games_summary_202021.csv", package = "bleaguer", mustWork = TRUE)
   df <- readr::read_csv(file,
                         col_types = colTypes,
                         locale = readr::locale(encoding = "UTF-8"))
@@ -213,6 +225,12 @@ LoadBoxscore <- function() {
                         locale = readr::locale(encoding = "UTF-8"))
   result <- rbind(result, df)
 
+  file <- system.file("extdata", "games_boxscore_202021.csv", package = "bleaguer", mustWork = TRUE)
+  df <- readr::read_csv(file,
+                        col_types = colTypes,
+                        locale = readr::locale(encoding = "UTF-8"))
+  result <- rbind(result, df)
+
   # Adding levels to Positoin factor form guard to center
   result$Position <- factor(result$Position,
                             levels = c("PG",
@@ -233,7 +251,7 @@ LoadBoxscore <- function() {
 }
 
 # Objects that get loaded by default when this package gets loaded
-b.current.season = "2019-20"
+b.current.season = "2020-21"
 b.teams <- LoadTeams()
 b.events <- LoadEvents()
 b.games <- LoadGames()

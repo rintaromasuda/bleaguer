@@ -6,6 +6,7 @@ test_that("Test cases for data frames for analytics", {
   df1617 <- subset(df, Season == "2016-17")
   df1718 <- subset(df, Season == "2017-18")
   df1819 <- subset(df, Season == "2018-19")
+  df1920 <- subset(df, Season == "2019-20")
 
   # Expected number of records in regular season
   # 540 games in each league and each game has 2 record.
@@ -39,6 +40,16 @@ test_that("Test cases for data frames for analytics", {
   expect_equal(
     nrow(subset(df1819, Category == "Regular" & League == "B2")),
     expected
+  )
+
+  expect_equal(
+    nrow(subset(df1920, Category == "Regular" & League == "B1")),
+    367 * 2 #Number of games done in 2019-20 (ended in the middle due to the pandemic)
+  )
+
+  expect_equal(
+    nrow(subset(df1920, Category == "Regular" & League == "B2")),
+    423 * 2 #Number of games done in 2019-20 (ended in the middle due to the pandemic)
   )
 })
 
