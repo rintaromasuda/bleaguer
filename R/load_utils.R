@@ -66,6 +66,12 @@ LoadGames <- function() {
                         locale = readr::locale(encoding = "UTF-8"))
   result <- rbind(result, df)
 
+  file <- system.file("extdata", "games_202021.csv", package = "bleaguer", mustWork = TRUE)
+  df <- readr::read_csv(file,
+                        col_types = colTypes,
+                        locale = readr::locale(encoding = "UTF-8"))
+  result <- rbind(result, df)
+
   return(result)
 }
 
@@ -140,6 +146,12 @@ LoadGameSummary <- function() {
                         locale = readr::locale(encoding = "UTF-8"))
   result <- rbind(result, df)
 
+  file <- system.file("extdata", "games_summary_202021.csv", package = "bleaguer", mustWork = TRUE)
+  df <- readr::read_csv(file,
+                        col_types = colTypes,
+                        locale = readr::locale(encoding = "UTF-8"))
+  result <- rbind(result, df)
+
   return(result)
 }
 
@@ -208,6 +220,12 @@ LoadBoxscore <- function() {
   result <- rbind(result, df)
 
   file <- system.file("extdata", "games_boxscore_201920.csv", package = "bleaguer", mustWork = TRUE)
+  df <- readr::read_csv(file,
+                        col_types = colTypes,
+                        locale = readr::locale(encoding = "UTF-8"))
+  result <- rbind(result, df)
+
+  file <- system.file("extdata", "games_boxscore_202021.csv", package = "bleaguer", mustWork = TRUE)
   df <- readr::read_csv(file,
                         col_types = colTypes,
                         locale = readr::locale(encoding = "UTF-8"))
