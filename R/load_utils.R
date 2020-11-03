@@ -233,7 +233,7 @@ LoadBoxscore <- function() {
 }
 
 # Objects that get loaded by default when this package gets loaded
-b.current.season = "2019-20"
+b.current.season = "2020-21"
 b.teams <- LoadTeams()
 b.events <- LoadEvents()
 b.games <- LoadGames()
