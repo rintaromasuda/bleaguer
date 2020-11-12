@@ -82,11 +82,11 @@ test_that("Test cases for the game data.frame", {
     nrow(subset(b.games, Season == "2019-20" & EventId == 7)), #B2 RS
     423 #Number of games done in 2019-20 (ended in the middle due to the pandemic)
   )
-  expect_equal(
+  expect_gt(
     nrow(subset(b.games, Season == "2020-21" & EventId == 2)), #B1 RS
     0
   )
-  expect_equal(
+  expect_gt(
     nrow(subset(b.games, Season == "2020-21" & EventId == 7)), #B2 RS
     0
   )
