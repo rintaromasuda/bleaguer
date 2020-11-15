@@ -15,7 +15,7 @@ MergeSummary <- function(df) {
 }
 
 #' @export
-GetGameSummary <- function() {
+GetGameSummary <- function(ignoreBoxscore = FALSE) {
   df <- merge(b.games, b.events, by = "EventId")
   df$Event <- df$ShortName
 
@@ -152,6 +152,41 @@ GetGameSummary <- function() {
 
   df.result$ORR <- df.result$OR / (df.result$OR + df.result$Opp.DR)
   df.result$DRR <- df.result$DR / (df.result$DR + df.result$Opp.OR)
+
+  return(df.result)
+}
+
+#' @export
+GetBoxscoreAgg <- function() {
+  df.result <-
+    b.games.boxscore %>%
+    dplyr::group_by(ScheduleKey, TeamId) %>%
+    dplyr::summarize(
+      NUM_Start = dplyr::n_distinct(PlayerId[StarterBench == "Starter"]),
+      NUM_Bench = dplyr::n_distinct(PlayerId[StarterBench == "Bench"]),
+      PTS_Total = sum(PTS),
+      PTS_Starter = sum(PTS[StarterBench == "Starter"]),
+      PTS_Bench = sum(PTS[StarterBench =="Bench"]),
+      MIN_Total = sum(MIN),
+      MIN_Starter = sum(MIN[StarterBench == "Starter"]),
+      MIN_Bench = sum(MIN[StarterBench == "Bench"]),
+      FGA_Total = sum(FGA),
+      FGA_Starter = sum(FGA[StarterBench == "Starter"]),
+      FGA_Bench = sum(FGA[StarterBench =="Bench"]),
+      FGM_Total = sum(FGM),
+      FGM_Starter = sum(FGM[StarterBench == "Starter"]),
+      FGM_Bench = sum(FGM[StarterBench =="Bench"])
+    )
+
+  df.result$StarterPTSRate <- df.result$PTS_Starter / df.result$PTS_Total
+  df.result$StarterMINRate <- df.result$MIN_Starter / df.result$MIN_Total
+  df.result$StarterFGARate <- df.result$FGA_Starter / df.result$FGA_Total
+  df.result$StarterFGMRate <- df.result$FGM_Starter / df.result$FGM_Total
+
+  df.result$BenchPTSRate <- df.result$PTS_Bench / df.result$PTS_Total
+  df.result$BenchMINRate <- df.result$MIN_Bench / df.result$MIN_Total
+  df.result$BenchFGARate <- df.result$FGA_Bench / df.result$FGA_Total
+  df.result$BenchFGMRate <- df.result$FGM_Bench / df.result$FGM_Total
 
   return(df.result)
 }

@@ -164,7 +164,7 @@ LoadBoxscore <- function() {
     # BoxType
     readr::col_factor(),
     # PlayerId
-    readr::col_integer(),
+    readr::col_character(),
     # Player
     readr::col_character(),
     # Number
