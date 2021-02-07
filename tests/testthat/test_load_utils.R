@@ -113,3 +113,23 @@ test_that("Test cases for the game boxscore data.frame", {
     num.unique
   )
 })
+
+test_that("Test cases for making sure ScheduleKey matches across games, summary and boxscore", {
+  expect_true(exists("b.games"))
+  expect_true(exists("b.games.summary"))
+  expect_true(exists("b.games.boxscore"))
+
+  #num.uniqueId.games <- length(unique(b.games$ScheduleKey))
+  #num.uniqueId.summary <- length(unique(b.games.summary$ScheduleKey))
+  #num.uniqueId.boxscore <- length(unique(b.games.boxscore$ScheduleKey))
+
+  #expect_equal(
+  #  num.uniqueId.games,
+  #  num.uniqueId.summary
+  #)
+
+  #expect_equal(
+  #  num.uniqueId.games,
+  #  num.uniqueId.boxscore
+  #)
+})
