@@ -32,6 +32,12 @@ test_that("Test cases for the team data.frame", {
   expect_equal(
     length(unique(subset(b.teams, Season == "2020-21" & League == "B2")$TeamId)),
     16)
+  expect_equal(
+    length(unique(subset(b.teams, Season == "2021-22" & League == "B1")$TeamId)),
+    22)
+  expect_equal(
+    length(unique(subset(b.teams, Season == "2021-22" & League == "B2")$TeamId)),
+    14)
 })
 
 test_that("Test cases for the event data.frame", {
