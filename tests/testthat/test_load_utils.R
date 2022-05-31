@@ -96,6 +96,14 @@ test_that("Test cases for the game data.frame", {
     nrow(subset(b.games, Season == "2020-21" & EventId == 7)), #B2 RS
     0
   )
+  expect_gt(
+    nrow(subset(b.games, Season == "2021-22" & EventId == 2)), #B1 RS
+    0
+  )
+  expect_gt(
+    nrow(subset(b.games, Season == "2021-22" & EventId == 7)), #B2 RS
+    0
+  )
 })
 
 test_that("Test cases for the game summary data.frame", {
